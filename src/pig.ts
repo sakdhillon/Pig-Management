@@ -31,6 +31,7 @@ interface DynamicFieldMap {
 
 // PIG Class
 class Pig {
+    static pigNum = 0;
     name: string;
     height: number;
     weight: number;
@@ -46,5 +47,6 @@ class Pig {
         this.category = c;
         this.personality = p;
         this.dynamicField = {} as DynamicFieldMap[keyof typeof PigType];
+        Pig.pigNum++;
     }
 }
