@@ -50,3 +50,6 @@ class Pig {
         Pig.pigNum++;
     }
 }
+
+
+// adding functions to take in the data within this file 

@@ -4,6 +4,7 @@ let message = ("hiiiiii peeepppssss");
 console.log(message);
 // PIG Categories
 var PigType;
+// PIG Categories
 (function (PigType) {
     PigType["Grey"] = "Grey";
     PigType["Chestnut"] = "Chestnut";
@@ -23,3 +24,4 @@ class Pig {
     }
 }
 Pig.pigNum = 0;
+// adding functions to take in the data within this file 
