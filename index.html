@@ -4,13 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment 3</title>
+    <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
+    <header>
+        <h1>
+            PIG DATABASE
+        </h1>
+    </header>
 
-    <button id="create">CREATE</button>
+    <main>
+        <table id="main-table">
+            <tr>
+                <th>
+                    NAME
+                </th>
+                <th>
+                    CATEGORY
+                </th>
+            </tr>
+            <!-- table drop down in between for more info? -->
+        </table>
 
-    <button id="getall">GET ALL</button>
+        <button id="add">Add</button>
+
+        <table id="adding-pig">
+            <tbody></tbody>
+        </table>
+
+        <button id="create">Create</button>
+
+        <button id="getall">GET ALL</button>
+
+    </main>
     
+    <!-- to modularize typescript -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.47/system.js" integrity="sha512-mkBpeD76fJnxFHGZstCL0mPCW6E3RFtUzfp5Ye8oQg2rxQNHy4BgHsbmvSizsq3fgF4PGozPI1BzGCB/h1Yq5g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
         System.defaultJSExtension = true
@@ -18,5 +46,6 @@
     </script> -->
     <script src="src/pig.js"></script>
     <script src="src/pigController.js"></script>
+    <script src="src/main.js"></script>
 </body>
 </html>

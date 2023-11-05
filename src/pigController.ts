@@ -46,15 +46,21 @@ class Controller implements PigServices{
 
 // just for testing purposes
 
-var p = new Controller();
+// var p = new Controller();
 
 
-document.getElementById("create")?.addEventListener('click', function(){
-    var pig = new Pig("piggy", 23, 23, PigType.White, "dude");
-    (pig.dynamicField as DynamicFieldMap[PigType.Grey]).Swimming = 42;
-    p.add(pig);
-});
+// document.getElementById("add")!.addEventListener('click', function(){
+//     var pig = new Pig("piggy", 23, 23, PigType.White, "dude");
+//     (pig.dynamicField as DynamicFieldMap[PigType.Grey]).Swimming = 42;
+//     p.add(pig);
+// });
 
-document.getElementById("getall")?.addEventListener('click', function(){
-    console.log(p.showAll());
-});
+
+// document.getElementById("getall")!.addEventListener('click', function(){
+//     console.log(p.showAll());
+// });
+
+
+
+// functions for the webpage 
+

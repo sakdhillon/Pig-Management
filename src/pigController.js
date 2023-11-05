@@ -1,6 +1,5 @@
 "use strict";
 ////// NEEDS TO MODULARIZE THE CODDEEEEE ---- USE IMPORT AND EXPORT AND THEN USE LITE-SERVER
-var _a, _b;
 class Controller {
     constructor() {
         this.pigs = [];
@@ -25,12 +24,13 @@ class Controller {
     }
 }
 // just for testing purposes
-var p = new Controller();
-(_a = document.getElementById("create")) === null || _a === void 0 ? void 0 : _a.addEventListener('click', function () {
-    var pig = new Pig("piggy", 23, 23, PigType.White, "dude");
-    pig.dynamicField.Swimming = 42;
-    p.add(pig);
-});
-(_b = document.getElementById("getall")) === null || _b === void 0 ? void 0 : _b.addEventListener('click', function () {
-    console.log(p.showAll());
-});
+// var p = new Controller();
+// document.getElementById("add")!.addEventListener('click', function(){
+//     var pig = new Pig("piggy", 23, 23, PigType.White, "dude");
+//     (pig.dynamicField as DynamicFieldMap[PigType.Grey]).Swimming = 42;
+//     p.add(pig);
+// });
+// document.getElementById("getall")!.addEventListener('click', function(){
+//     console.log(p.showAll());
+// });
+// functions for the webpage 

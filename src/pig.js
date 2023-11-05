@@ -2,8 +2,10 @@
 //testing connections 
 let message = ("hiiiiii peeepppssss");
 console.log(message);
+/////////////////////////// NEEDS TO DECLARE ALL TYPESSSSSS ///////////////////////////
 // PIG Categories
 var PigType;
+/////////////////////////// NEEDS TO DECLARE ALL TYPESSSSSS ///////////////////////////
 // PIG Categories
 (function (PigType) {
     PigType["Grey"] = "Grey";
@@ -13,6 +15,7 @@ var PigType;
 })(PigType || (PigType = {}));
 // PIG Class
 class Pig {
+    //ading an id???? based on the number of pigs -> private 
     constructor(n, h, w, c, p) {
         this.name = n;
         this.height = h;
@@ -24,4 +27,3 @@ class Pig {
     }
 }
 Pig.pigNum = 0;
-// adding functions to take in the data within this file 

@@ -4,6 +4,9 @@
 let message: string = ("hiiiiii peeepppssss");
 console.log(message);
 
+
+/////////////////////////// NEEDS TO DECLARE ALL TYPESSSSSS ///////////////////////////
+
 // PIG Categories
 
 enum PigType{
@@ -31,14 +34,16 @@ interface DynamicFieldMap {
 
 // PIG Class
 class Pig {
-    static pigNum = 0;
-    name: string;
-    height: number;
-    weight: number;
-    category: keyof typeof PigType;
-    personality: string;
+    private static pigNum = 0;
+    public name: string;
+    public height: number;
+    public weight: number;
+    public category: keyof typeof PigType;
+    public personality: string;
 
-    dynamicField: DynamicFieldMap[keyof typeof PigType];
+    public dynamicField: DynamicFieldMap[keyof typeof PigType];
+
+    //ading an id???? based on the number of pigs -> private 
 
     constructor(n: string, h: number, w: number, c: keyof typeof PigType, p: string) {
         this.name = n;
@@ -50,6 +55,3 @@ class Pig {
         Pig.pigNum++;
     }
 }
-
-
-// adding functions to take in the data within this file 
