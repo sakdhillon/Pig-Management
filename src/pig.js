@@ -1,29 +1,39 @@
-"use strict";
-//testing connections 
-let message = ("hiiiiii peeepppssss");
-console.log(message);
-/////////////////////////// NEEDS TO DECLARE ALL TYPESSSSSS ///////////////////////////
 // PIG Categories
-var PigType;
-/////////////////////////// NEEDS TO DECLARE ALL TYPESSSSSS ///////////////////////////
-// PIG Categories
-(function (PigType) {
-    PigType["Grey"] = "Grey";
-    PigType["Chestnut"] = "Chestnut";
-    PigType["White"] = "White";
-    PigType["Black"] = "Black";
-})(PigType || (PigType = {}));
-// PIG Class
-class Pig {
-    //ading an id???? based on the number of pigs -> private 
-    constructor(n, h, w, c, p) {
-        this.name = n;
-        this.height = h;
-        this.weight = w;
-        this.category = c;
-        this.personality = p;
-        this.dynamicField = {};
-        Pig.pigNum++;
-    }
-}
-Pig.pigNum = 0;
+System.register([], function (exports_1, context_1) {
+    "use strict";
+    var PigType, Pig, greyBreeds, whiteBreeds, chestnutBreeds, blackBreeds;
+    var __moduleName = context_1 && context_1.id;
+    return {
+        setters: [],
+        execute: function () {
+            (function (PigType) {
+                PigType["Grey"] = "Grey";
+                PigType["Chestnut"] = "Chestnut";
+                PigType["White"] = "White";
+                PigType["Black"] = "Black";
+            })(PigType || (PigType = {}));
+            exports_1("PigType", PigType);
+            // PIG Class
+            Pig = class Pig {
+                //ading an id???? based on the number of pigs -> private 
+                constructor(n, h, w, c, p, b) {
+                    this.Name = n;
+                    this.Height = h;
+                    this.Weight = w;
+                    this.Category = c;
+                    this.Personality = p;
+                    this.Breed = b;
+                    this.dynamicField = {};
+                    Pig.pigNum++;
+                }
+            };
+            Pig.pigNum = 0;
+            exports_1("Pig", Pig);
+            /// BREEDSS
+            exports_1("greyBreeds", greyBreeds = ['grey']);
+            exports_1("whiteBreeds", whiteBreeds = ['white']);
+            exports_1("chestnutBreeds", chestnutBreeds = ['chestnuttt']);
+            exports_1("blackBreeds", blackBreeds = ['blackk']);
+        }
+    };
+});

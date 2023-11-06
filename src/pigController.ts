@@ -1,10 +1,9 @@
 
-////// NEEDS TO MODULARIZE THE CODDEEEEE ---- USE IMPORT AND EXPORT AND THEN USE LITE-SERVER
 
-// import * as Model from "./pig";
-// import Pig = Model.Pig; 
-// import DynamicFieldMap = Model.DynamicFieldMap;
-// import PigType = Model.PigType;
+import * as Model from "./pig";
+import Pig = Model.Pig; 
+import DynamicFieldMap = Model.DynamicFieldMap;
+import PigType = Model.PigType;
 
 interface PigServices {
     add(p:Pig): number;
@@ -14,7 +13,7 @@ interface PigServices {
     showAll(): Pig[];
 }
 
-class Controller implements PigServices{
+export class Controller implements PigServices{
     pigs: Pig[];
 
     constructor(){
@@ -29,9 +28,9 @@ class Controller implements PigServices{
     }
 
     delete(name: string): number{
-        // trying this for now? followed prof's video
+       
         this.pigs = this.pigs.filter((p) =>{
-            return p.name != name
+            return p.Name != name
         })
         localStorage.UserArray = JSON.stringify(this.pigs);     // saving in the local storage
         return this.pigs.length;
@@ -59,8 +58,4 @@ class Controller implements PigServices{
 // document.getElementById("getall")!.addEventListener('click', function(){
 //     console.log(p.showAll());
 // });
-
-
-
-// functions for the webpage 
 
