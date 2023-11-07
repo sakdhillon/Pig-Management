@@ -1,10 +1,11 @@
 System.register(["./pig", "./pigController"], function (exports_1, context_1) {
     "use strict";
-    var Model, Pig, PigType, pigController_1, pig_1, p;
+    var Model, Pig, PigType, pigController_1, pig_1, pig_2, pig_3, pig_4, p;
     var __moduleName = context_1 && context_1.id;
-    //TODO: try to start this today 
+    //TODO: make the table -> erase table and rewrite it each time 
     function tableUpdate(p) {
         // reading the p.pigs array from within the controller
+        console.log("making table...");
     }
     function getInputType(value) {
         if (value === 'Name' || value === 'Personality') {
@@ -18,6 +19,7 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
             return "select";
         }
     }
+    // completed create table -> for adding a pig
     function createTable() {
         //making the add pig table 
         const table = document.getElementById("adding-pig");
@@ -58,7 +60,6 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                 }
             }
             // have a event listener -> if it is one of the categories, then add the dynamic field 
-            //TODO: add breed
             var select = document.getElementById('category');
             select.addEventListener('change', function () {
                 console.log('changedddd', select.options[select.selectedIndex].text);
@@ -90,6 +91,7 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                             }
                             const input = document.createElement("input");
                             input.type = inputType;
+                            input.id = tableRows.toString();
                             inputCell.appendChild(input);
                             tableRows++;
                             // for breed
@@ -103,15 +105,43 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                             breedoption.value = '0';
                             breedoption.text = 'Choose one';
                             breedselect.appendChild(breedoption);
-                            //for each category
                             let x = 1;
-                            Object.values(pig_1.whiteBreeds).forEach((values) => {
-                                const breedoption = document.createElement("option");
-                                breedoption.value = x.toString();
-                                breedoption.text = values;
-                                breedselect.appendChild(breedoption);
-                                x++;
-                            });
+                            if (select.value === '1') {
+                                Object.values(pig_1.greyBreeds).forEach((values) => {
+                                    const breedoption = document.createElement("option");
+                                    breedoption.value = x.toString();
+                                    breedoption.text = values;
+                                    breedselect.appendChild(breedoption);
+                                    x++;
+                                });
+                            }
+                            else if (select.value === '2') {
+                                Object.values(pig_3.chestnutBreeds).forEach((values) => {
+                                    const breedoption = document.createElement("option");
+                                    breedoption.value = x.toString();
+                                    breedoption.text = values;
+                                    breedselect.appendChild(breedoption);
+                                    x++;
+                                });
+                            }
+                            else if (select.value === '3') {
+                                Object.values(pig_2.whiteBreeds).forEach((values) => {
+                                    const breedoption = document.createElement("option");
+                                    breedoption.value = x.toString();
+                                    breedoption.text = values;
+                                    breedselect.appendChild(breedoption);
+                                    x++;
+                                });
+                            }
+                            else {
+                                Object.values(pig_4.blackBreeds).forEach((values) => {
+                                    const breedoption = document.createElement("option");
+                                    breedoption.value = x.toString();
+                                    breedoption.text = values;
+                                    breedselect.appendChild(breedoption);
+                                    x++;
+                                });
+                            }
                             selectCell.appendChild(breedselect);
                             tableRows++;
                         }
@@ -130,38 +160,55 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
             // that event listener goes to adding pig 
             document.getElementById('create').addEventListener('click', function () {
                 console.log('addddddd');
-                // add edge cases
+                // TODO: add edge cases
                 addingPig(tableRows);
             });
         }
     }
-    //TODO: complete adding the pig --> add cases if something isn't filled out and what not 
     // when you click on the add button 
     function addingPig(rows) {
         console.log('in adding pig function');
-        let creation;
-        for (var i = 0; i < rows; i++) {
-            if (i === 3) {
-                // needs to be writing PigType.colour
-            }
-            else {
-                var x = document.getElementById(i.toString());
-                creation[i] = x.value;
-            }
+        var pig;
+        var n = document.getElementById('0');
+        var h = document.getElementById('1');
+        var w = document.getElementById('2');
+        var select = document.getElementById('category');
+        var c = select.options[select.selectedIndex].text;
+        var per = document.getElementById('4');
+        var dynamic = document.getElementById('5');
+        select = document.getElementById('breeds');
+        var b = select.options[select.selectedIndex].text;
+        if (c == 'Grey') {
+            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Grey, per.value, b);
+            pig.dynamicField.Swimming = parseInt(dynamic.value);
         }
-        // var pig: Pig = new Pig(creation[0], creation[1], creation[2], creation[3], creation[4]);
-        // (pig.dynamicField as DynamicFieldMap[PigType.Grey]).Swimming ????? 
-        // p.add(pig);
+        else if (c == 'Chestnut') {
+            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Chestnut, per.value, b);
+            pig.dynamicField.Language = dynamic.value;
+        }
+        else if (c == 'White') {
+            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.White, per.value, b);
+            pig.dynamicField.Running = parseInt(dynamic.value);
+        }
+        else {
+            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Black, per.value, b);
+            pig.dynamicField.Strength = parseInt(dynamic.value);
+        }
+        var num = p.add(pig);
+        console.log(num);
+        ///UPDATE TABLEEEEE
+        tableUpdate(p.pigs);
     }
+    // TODO: write show more function 
     // create mini table within the table 
     function showMore() {
         // going to be doing by number 
     }
+    // TODO: connect to a button, and make sure this works 
     // delete the pig from the array and delete the row on the table 
     function deletePig(name) {
-        // delete function from p.pigs
-        //  writing this for now
         p.delete(name);
+        tableUpdate(p.pigs);
         // update table
     }
     return {
@@ -169,6 +216,9 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
             function (Model_1) {
                 Model = Model_1;
                 pig_1 = Model_1;
+                pig_2 = Model_1;
+                pig_3 = Model_1;
+                pig_4 = Model_1;
             },
             function (pigController_1_1) {
                 pigController_1 = pigController_1_1;

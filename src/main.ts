@@ -24,10 +24,11 @@ document.getElementById("add")!.addEventListener('click', function(){
 });
 
 
-//TODO: try to start this today 
+//TODO: make the table -> erase table and rewrite it each time 
 function tableUpdate(p: Pig[]){
 
     // reading the p.pigs array from within the controller
+    console.log("making table...");
 }
 
 
@@ -38,10 +39,13 @@ function getInputType(value: string): string {
       return "number";
     } else {
         console.log(value);
-      return "select";
+        return "select";
     }
-  }
+}
 
+
+
+// completed create table -> for adding a pig
 function createTable(){
 
     //making the add pig table 
@@ -88,7 +92,6 @@ function createTable(){
         }
 
         // have a event listener -> if it is one of the categories, then add the dynamic field 
-        //TODO: add breed
         var select = document.getElementById('category') as HTMLSelectElement;
         select!.addEventListener('change', function() {
             console.log('changedddd', select.options[select.selectedIndex].text);
@@ -125,13 +128,12 @@ function createTable(){
 
                         const input: HTMLInputElement = document.createElement("input");
                         input.type = inputType;
+                        input.id = tableRows.toString();
                         inputCell.appendChild(input);
 
                         tableRows++
 
-
                         // for breed
-
                         const breedRow: HTMLTableRowElement = tbody.insertRow(-1);
                         breedRow.insertCell(0).textContent = 'Breeds';
                         const selectCell: HTMLTableCellElement = breedRow.insertCell(1);
@@ -145,15 +147,40 @@ function createTable(){
                         breedoption.text = 'Choose one';
                         breedselect.appendChild(breedoption);
 
-                        //for each category
                         let x: number = 1;
-                        Object.values(whiteBreeds).forEach((values) => {
-                            const breedoption: HTMLOptionElement = document.createElement("option");
-                            breedoption.value = x.toString();
-                            breedoption.text = values;
-                            breedselect.appendChild(breedoption);
-                            x++;
-                        });
+                        if (select.value === '1'){
+                            Object.values(greyBreeds).forEach((values) => {
+                                const breedoption: HTMLOptionElement = document.createElement("option");
+                                breedoption.value = x.toString();
+                                breedoption.text = values;
+                                breedselect.appendChild(breedoption);
+                                x++;
+                            });
+                        } else if (select.value === '2'){
+                            Object.values(chestnutBreeds).forEach((values) => {
+                                const breedoption: HTMLOptionElement = document.createElement("option");
+                                breedoption.value = x.toString();
+                                breedoption.text = values;
+                                breedselect.appendChild(breedoption);
+                                x++;
+                            });
+                        } else if (select.value === '3'){
+                            Object.values(whiteBreeds).forEach((values) => {
+                                const breedoption: HTMLOptionElement = document.createElement("option");
+                                breedoption.value = x.toString();
+                                breedoption.text = values;
+                                breedselect.appendChild(breedoption);
+                                x++;
+                            });
+                        } else{
+                            Object.values(blackBreeds).forEach((values) => {
+                                const breedoption: HTMLOptionElement = document.createElement("option");
+                                breedoption.value = x.toString();
+                                breedoption.text = values;
+                                breedselect.appendChild(breedoption);
+                                x++;
+                            });
+                        }
                         selectCell.appendChild(breedselect);
                         tableRows++
 
@@ -174,7 +201,7 @@ function createTable(){
             // that event listener goes to adding pig 
         document.getElementById('create')!.addEventListener('click', function(){
             console.log('addddddd');
-            // add edge cases
+            // TODO: add edge cases
             addingPig(tableRows);
         });
     }
@@ -182,36 +209,54 @@ function createTable(){
 
 
 
-
-
-
-
-//TODO: complete adding the pig --> add cases if something isn't filled out and what not 
 // when you click on the add button 
 function addingPig(rows: number){
     console.log('in adding pig function');
 
-    let creation: any[5];
+    var pig: Pig;
 
-    for (var i: number = 0; i < rows; i++){
-        if (i === 3){
-            
-            // needs to be writing PigType.colour
+    var n = document.getElementById('0') as HTMLInputElement;
+    var h = document.getElementById('1') as HTMLInputElement;
+    var w = document.getElementById('2') as HTMLInputElement;
 
-        } else{
-            var x = document.getElementById(i.toString()) as HTMLInputElement
-            creation[i] = x!.value;
-        }
+    var select = document.getElementById('category') as HTMLSelectElement;
+    var c = select.options[select.selectedIndex].text;
+
+    var per = document.getElementById('4') as HTMLInputElement;
+    var dynamic = document.getElementById('5') as HTMLInputElement;
+ 
+    select = document.getElementById('breeds') as HTMLSelectElement;
+    var b = select.options[select.selectedIndex].text;
+
+
+    if (c == 'Grey'){
+        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Grey, per.value, b);
+        (pig.dynamicField as DynamicFieldMap[PigType.Grey]).Swimming = parseInt(dynamic.value);
+
+    } else if (c == 'Chestnut'){
+        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Chestnut, per.value, b);
+        (pig.dynamicField as DynamicFieldMap[PigType.Chestnut]).Language = dynamic.value; 
+
+    } else if (c == 'White'){
+        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.White, per.value, b);
+        (pig.dynamicField as DynamicFieldMap[PigType.White]).Running = parseInt(dynamic.value);
+
+    } else{
+        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Black, per.value, b);
+        (pig.dynamicField as DynamicFieldMap[PigType.Black]).Strength = parseInt(dynamic.value);
+        
     }
-    // var pig: Pig = new Pig(creation[0], creation[1], creation[2], creation[3], creation[4]);
-    // (pig.dynamicField as DynamicFieldMap[PigType.Grey]).Swimming ????? 
 
-    // p.add(pig);
+    var num = p.add(pig);
 
+    console.log(num);
 
+    ///UPDATE TABLEEEEE
+    tableUpdate(p.pigs);
 }
 
 
+// TODO: write show more function 
 // create mini table within the table 
 function showMore(){
 
@@ -220,16 +265,11 @@ function showMore(){
 }
 
 
+// TODO: connect to a button, and make sure this works 
 // delete the pig from the array and delete the row on the table 
 function deletePig(name: string){
 
-    // delete function from p.pigs
-
-
-    //  writing this for now
     p.delete(name);
+    tableUpdate(p.pigs);
     // update table
-
-    
-
 }
