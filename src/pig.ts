@@ -27,6 +27,7 @@ export interface DynamicFieldMap {
 // PIG Class
 export class Pig {
     private static pigNum = 0;
+    public id: number;
     public Name: string;
     public Height: number;
     public Weight: number;
@@ -46,6 +47,7 @@ export class Pig {
         this.Personality = p;
         this.Breed = b;
         this.dynamicField = {} as DynamicFieldMap[keyof typeof PigType];
+        this.id = Pig.pigNum;
         Pig.pigNum++;
     }
 }

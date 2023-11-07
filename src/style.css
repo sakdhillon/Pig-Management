@@ -6,8 +6,91 @@ h1{
 }
 
 
+table{
+    margin-left: 25px;
+    margin-top: 30px;
+} 
+
 
 #create{
     display:none;
+    margin-top: 10px;
+}
+#cancel{
+    display:none;
+    margin-top: 10px;
 }
 
+
+#add {
+    margin-top: 30px;
+    margin-left: 25px;
+}
+
+
+button{
+    margin-left: 25px;
+    display: inline-block;
+    background-color:#FF1D8E;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+
+
+
+#main-table {
+    width: 95%; 
+    border-collapse: collapse;
+}
+
+
+#main-table th {
+    background-color: #e579af; 
+    font-weight: bold;
+    padding: 25px; 
+    text-align: center;
+}
+
+
+#main-table tr:nth-child(odd) {
+    background-color: #fccbe1; 
+}
+
+
+#main-table tr:nth-child(even) {
+    background-color: #fad9ec; 
+}
+
+
+#main-table tr{
+    text-align: center;
+}
+
+
+#main-table td{
+    line-height: 3;
+}
+
+
+
+
+
+
+#adding-pig tr{
+    text-align: left;
+    background-color: #fad9ec; 
+}
+
+#adding-pig td{
+    margin-left: 10;
+    line-height: 3;
+}
+
+#adding-pig {
+    width: 45%; 
+    border-collapse: collapse;
+    padding: 10px;
+}

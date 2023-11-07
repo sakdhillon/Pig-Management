@@ -15,9 +15,9 @@ System.register([], function (exports_1, context_1) {
                     console.log("added piggggg");
                     return this.pigs.length;
                 }
-                delete(name) {
+                delete(id) {
                     this.pigs = this.pigs.filter((p) => {
-                        return p.Name != name;
+                        return p.id != id;
                     });
                     localStorage.UserArray = JSON.stringify(this.pigs); // saving in the local storage
                     return this.pigs.length;

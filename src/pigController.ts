@@ -8,7 +8,7 @@ import PigType = Model.PigType;
 interface PigServices {
     add(p:Pig): number;
 
-    delete(name: string): number;
+    delete(id: number): number;
 
     showAll(): Pig[];
 }
@@ -27,10 +27,10 @@ export class Controller implements PigServices{
         return this.pigs.length;
     }
 
-    delete(name: string): number{
+    delete(id: number): number{
        
         this.pigs = this.pigs.filter((p) =>{
-            return p.Name != name
+            return p.id != id
         })
         localStorage.UserArray = JSON.stringify(this.pigs);     // saving in the local storage
         return this.pigs.length;
