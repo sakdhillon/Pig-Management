@@ -1,9 +1,9 @@
 /// TODO: change content - don't delete the row - for the adding pig 
 System.register(["./pig", "./pigController"], function (exports_1, context_1) {
     "use strict";
-    var Model, Pig, PigType, pigController_1, pig_1, pig_2, pig_3, pig_4, p, container;
+    var Model, Pig, PigType, pigController_1, pig_1, pig_2, pig_3, pig_4, p, containerShow, container;
     var __moduleName = context_1 && context_1.id;
-    //TODO: make the table -> erase table and rewrite it each time 
+    //make the table
     function tableUpdate(pig, origin, id) {
         // reading the p.pigs array from within the controller
         console.log("making table...");
@@ -11,10 +11,21 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
         const tbody = table.querySelector("tbody");
         if (tbody) {
             if (origin == 'delete') {
-                //something
                 console.log('within the delete that is in the update tableeeee');
                 console.log(table.rows.length);
-                table.deleteRow(id + 1); // kind of works but what if a row in the middle was deleted 
+                var x = 0;
+                console.log('pig length', p.pigs.length);
+                for (var i = 0; i < p.pigs.length; i++) {
+                    console.log('pig id', p.pigs[i].id);
+                    console.log('id', id);
+                    if (p.pigs[i].id === id) {
+                        x = i + 1;
+                        console.log("x", x);
+                        table.deleteRow(x);
+                        p.delete(id);
+                        break;
+                    }
+                }
             }
             else if (origin == 'add') {
                 const row = tbody.insertRow(-1);
@@ -24,16 +35,16 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                 const buttonSM = document.createElement('button');
                 buttonSM.id = 'show-more' + (p.pigs.length - 1).toString();
                 buttonSM.classList.add('showMore-button');
-                buttonSM.value = (p.pigs.length - 1).toString();
+                buttonSM.value = (p.pigs.length).toString();
                 buttonSM.textContent = 'Show More';
                 row.insertCell(2).appendChild(buttonSM);
                 const buttonD = document.createElement('button');
                 buttonD.id = 'delete' + (p.pigs.length - 1).toString();
                 buttonD.classList.add('delete-button');
                 buttonD.textContent = 'Delete';
-                buttonD.value = (p.pigs.length - 1).toString();
-                // console.log((p.pigs.length-1).toString() +'id')
+                buttonD.value = (p.pigs.length).toString();
                 row.insertCell(3).appendChild(buttonD);
+                console.log('the id', p.pigs[p.pigs.length - 1].id);
             }
         }
     }
@@ -65,8 +76,8 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
             const tbody = table.querySelector("tbody");
             tableRows = 0;
             if (tbody) {
-                for (let i in new Pig("", 0, 0, PigType.Grey, "", '')) {
-                    if (i !== "constructor" && i !== "dynamicField" && i !== 'Breed' && i !== 'id') {
+                for (let i in new Pig("", 0, 0, PigType.Grey, "", '', 0)) {
+                    if (i !== "constructor" && i !== "dynamicField" && i !== 'Breed' && i !== 'id' && i !== 'pigNum') {
                         const row = tbody.insertRow(-1);
                         row.insertCell(0).textContent = i;
                         const inputCell = row.insertCell(1);
@@ -138,7 +149,7 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                         tableRows++;
                         // for breed
                         const breedRow = tbody.insertRow(-1);
-                        breedRow.insertCell(0).textContent = 'Breeds';
+                        breedRow.insertCell(0).textContent = 'Breed';
                         const selectCell = breedRow.insertCell(1);
                         const breedselect = document.createElement('select');
                         breedselect.id = tableRows.toString();
@@ -226,20 +237,21 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
         var b = select.options[select.selectedIndex].text;
         console.log("breed", b);
         select.selectedIndex = 0;
+        var id = p.pigs.length + 1;
         if (c == 'Grey') {
-            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Grey, per.value, b);
+            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Grey, per.value, b, id);
             pig.dynamicField.Swimming = parseInt(dynamic.value);
         }
         else if (c == 'Chestnut') {
-            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Chestnut, per.value, b);
+            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Chestnut, per.value, b, id);
             pig.dynamicField.Language = dynamic.value;
         }
         else if (c == 'White') {
-            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.White, per.value, b);
+            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.White, per.value, b, id);
             pig.dynamicField.Running = parseInt(dynamic.value);
         }
         else {
-            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Black, per.value, b);
+            pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Black, per.value, b, id);
             pig.dynamicField.Strength = parseInt(dynamic.value);
         }
         n.value = '';
@@ -262,11 +274,6 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
     // create mini table within the table 
     function showMore() {
         // going to be doing by number 
-    }
-    function deletePig(id) {
-        p.delete(id);
-        tableUpdate(p.pigs, 'delete', id);
-        // update table
     }
     return {
         setters: [
@@ -315,6 +322,58 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                 per.value = '';
                 dynamic.value = '';
             });
+            containerShow = document.getElementById("main-table");
+            if (containerShow) {
+                containerShow.addEventListener("click", function (event) {
+                    const target = event.target;
+                    if (target && target.classList.contains("showMore-button")) {
+                        const clickedButton = target;
+                        const id = parseInt(clickedButton.value);
+                        console.log("id: ", id);
+                        console.log("Button with class 'showwwww' was clicked!");
+                        const table = document.getElementById("showMore");
+                        const tbody = table.querySelector("tbody");
+                        table.style.visibility = 'visible';
+                        console.log(p.pigs[id - 1].Name);
+                        if (tbody) {
+                            console.log(tbody.rows.length);
+                            var row = tbody.rows[0];
+                            row.cells[1].textContent = p.pigs[id - 1].Name;
+                            row = tbody.rows[1];
+                            row.cells[1].textContent = p.pigs[id - 1].Height.toString();
+                            row = tbody.rows[2];
+                            row.cells[1].textContent = p.pigs[id - 1].Weight.toString();
+                            row = tbody.rows[3];
+                            row.cells[1].textContent = p.pigs[id - 1].Category;
+                            row = tbody.rows[4];
+                            row.cells[1].textContent = p.pigs[id - 1].Personality.toString();
+                            row = tbody.rows[5];
+                            row.cells[1].textContent = p.pigs[id - 1].Breed.toString();
+                            if (p.pigs[id - 1].Category === 'Grey') {
+                                row = tbody.rows[6];
+                                row.cells[0].textContent = 'Swimming';
+                                row.cells[1].textContent = p.pigs[id - 1].dynamicField.Swimming.toString();
+                            }
+                            else if (p.pigs[id - 1].Category === 'Chestnut') {
+                                row = tbody.rows[6];
+                                row.cells[0].textContent = 'Language';
+                                row.cells[1].textContent = p.pigs[id - 1].dynamicField.Language.toString();
+                            }
+                            else if (p.pigs[id - 1].Category === 'White') {
+                                row = tbody.rows[6];
+                                row.cells[0].textContent = 'Running';
+                                row.cells[1].textContent = p.pigs[id - 1].dynamicField.Running.toString();
+                            }
+                            else if (p.pigs[id - 1].Category === 'Black') {
+                                row = tbody.rows[6];
+                                row.cells[0].textContent = 'Strength';
+                                row.cells[1].textContent = p.pigs[id - 1].dynamicField.Strength.toString();
+                            }
+                        }
+                    }
+                });
+            }
+            ////// to delete a pig 
             container = document.getElementById("main-table");
             if (container) {
                 container.addEventListener("click", function (event) {
@@ -324,7 +383,7 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                         const id = parseInt(clickedButton.value);
                         console.log("id: ", id);
                         console.log("Button with class 'delete' was clicked!");
-                        deletePig(id);
+                        tableUpdate(p.pigs, 'delete', id);
                     }
                 });
             }

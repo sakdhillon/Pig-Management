@@ -26,7 +26,6 @@ export interface DynamicFieldMap {
 
 // PIG Class
 export class Pig {
-    private static pigNum = 0;
     public id: number;
     public Name: string;
     public Height: number;
@@ -39,7 +38,7 @@ export class Pig {
 
     //ading an id???? based on the number of pigs -> private 
 
-    constructor(n: string, h: number, w: number, c: keyof typeof PigType, p: string, b: string) {
+    constructor(n: string, h: number, w: number, c: keyof typeof PigType, p: string, b: string, id: number) {
         this.Name = n;
         this.Height = h;
         this.Weight = w;
@@ -47,8 +46,7 @@ export class Pig {
         this.Personality = p;
         this.Breed = b;
         this.dynamicField = {} as DynamicFieldMap[keyof typeof PigType];
-        this.id = Pig.pigNum;
-        Pig.pigNum++;
+        this.id = id;
     }
 }
 

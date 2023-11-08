@@ -16,7 +16,7 @@ System.register([], function (exports_1, context_1) {
             // PIG Class
             Pig = class Pig {
                 //ading an id???? based on the number of pigs -> private 
-                constructor(n, h, w, c, p, b) {
+                constructor(n, h, w, c, p, b, id) {
                     this.Name = n;
                     this.Height = h;
                     this.Weight = w;
@@ -24,11 +24,9 @@ System.register([], function (exports_1, context_1) {
                     this.Personality = p;
                     this.Breed = b;
                     this.dynamicField = {};
-                    this.id = Pig.pigNum;
-                    Pig.pigNum++;
+                    this.id = id;
                 }
             };
-            Pig.pigNum = 0;
             exports_1("Pig", Pig);
             /// BREEDSS
             exports_1("greyBreeds", greyBreeds = ['grey']);

@@ -94,3 +94,10 @@ button{
     border-collapse: collapse;
     padding: 10px;
 }
+
+
+
+
+#showMore{
+    visibility: none;
+}

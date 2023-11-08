@@ -55,7 +55,7 @@ document.getElementById('cancel')!.addEventListener('click', function(){
 });
 
 
-//TODO: make the table -> erase table and rewrite it each time 
+//make the table
 function tableUpdate(pig: Pig[], origin: string, id: number){
 
     // reading the p.pigs array from within the controller
@@ -65,15 +65,29 @@ function tableUpdate(pig: Pig[], origin: string, id: number){
     const tbody = table!.querySelector("tbody");
     if (tbody){
         if (origin == 'delete'){
-            //something
 
             console.log('within the delete that is in the update tableeeee')
 
             console.log(table.rows.length);
 
-            table.deleteRow(id+1); // kind of works but what if a row in the middle was deleted 
+            var x: number = 0;
+            console.log('pig length', p.pigs.length);
+            for (var i: number = 0; i < p.pigs.length; i ++){
+                console.log('pig id', p.pigs[i].id);
+                console.log('id', id);
+                if (p.pigs[i].id === id){
+                    
+                    x = i + 1;
+                    console.log("x",x);
+                    table.deleteRow(x); 
+                    p.delete(id);
+                    break;
+                }
+            }
+
 
         } else if (origin == 'add'){
+
             const row: HTMLTableRowElement = tbody.insertRow(-1);
             console.log(p.pigs[p.pigs.length-1].Name);
             row.insertCell(0).textContent = p.pigs[p.pigs.length-1].Name;
@@ -83,7 +97,7 @@ function tableUpdate(pig: Pig[], origin: string, id: number){
             const buttonSM: HTMLButtonElement = document.createElement('button');
             buttonSM.id = 'show-more'+(p.pigs.length-1).toString();
             buttonSM.classList.add('showMore-button');
-            buttonSM.value = (p.pigs.length-1).toString();
+            buttonSM.value = (p.pigs.length).toString();
             buttonSM.textContent = 'Show More'
 
             row.insertCell(2).appendChild(buttonSM)
@@ -92,14 +106,14 @@ function tableUpdate(pig: Pig[], origin: string, id: number){
             buttonD.id = 'delete'+(p.pigs.length-1).toString();
             buttonD.classList.add('delete-button');
             buttonD.textContent = 'Delete';
-            buttonD.value = (p.pigs.length-1).toString();
-            // console.log((p.pigs.length-1).toString() +'id')
+            buttonD.value = (p.pigs.length).toString();
             row.insertCell(3).appendChild(buttonD)
 
-        }
- 
-    }
 
+
+            console.log('the id', p.pigs[p.pigs.length-1].id);
+        }
+    }
 }
 
 
@@ -134,8 +148,8 @@ function createTable(){
         tableRows = 0;
         
         if (tbody){
-            for (let i in new Pig("", 0, 0, PigType.Grey, "", '')){
-                if (i !== "constructor" && i !== "dynamicField" && i !== 'Breed'&& i !== 'id'){
+            for (let i in new Pig("", 0, 0, PigType.Grey, "", '', 0)){
+                if (i !== "constructor" && i !== "dynamicField" && i !== 'Breed'&& i !== 'id' && i !== 'pigNum'){
                     const row: HTMLTableRowElement = tbody.insertRow(-1);
                     row.insertCell(0).textContent = i;
                     const inputCell: HTMLTableCellElement = row.insertCell(1);
@@ -221,7 +235,7 @@ function createTable(){
 
                     // for breed
                     const breedRow: HTMLTableRowElement = tbody.insertRow(-1);
-                    breedRow.insertCell(0).textContent = 'Breeds';
+                    breedRow.insertCell(0).textContent = 'Breed';
                     const selectCell: HTMLTableCellElement = breedRow.insertCell(1);
 
                     const breedselect: HTMLSelectElement = document.createElement('select');
@@ -324,21 +338,23 @@ function addingPig(){
     console.log("breed", b);
     select.selectedIndex = 0;
 
+    var id: number = p.pigs.length + 1;
+
 
     if (c == 'Grey'){
-        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Grey, per.value, b);
+        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Grey, per.value, b, id);
         (pig.dynamicField as DynamicFieldMap[PigType.Grey]).Swimming = parseInt(dynamic.value);
 
     } else if (c == 'Chestnut'){
-        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Chestnut, per.value, b);
+        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Chestnut, per.value, b, id);
         (pig.dynamicField as DynamicFieldMap[PigType.Chestnut]).Language = dynamic.value; 
 
     } else if (c == 'White'){
-        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.White, per.value, b);
+        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.White, per.value, b, id);
         (pig.dynamicField as DynamicFieldMap[PigType.White]).Running = parseInt(dynamic.value);
 
     } else{
-        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Black, per.value, b);
+        pig = new Pig(n.value, parseInt(h.value), parseInt(w.value), PigType.Black, per.value, b, id);
         (pig.dynamicField as DynamicFieldMap[PigType.Black]).Strength = parseInt(dynamic.value);
         
     }
@@ -372,6 +388,76 @@ function showMore(){
 
     // going to be doing by number 
 
+
+}
+
+const containerShow = document.getElementById("main-table") as HTMLTableElement;
+if (containerShow) {
+
+    containerShow.addEventListener("click", function(event) {
+      const target = event.target as HTMLElement; 
+  
+      if (target && target.classList.contains("showMore-button")) {
+
+        const clickedButton = target as HTMLButtonElement;
+        const id: number = parseInt(clickedButton.value);
+
+        console.log("id: ", id);
+  
+        console.log("Button with class 'showwwww' was clicked!");
+
+
+        const table = document.getElementById("showMore") as HTMLTableElement;
+        const tbody = table!.querySelector("tbody");
+
+        table.style.visibility = 'visible'
+
+        console.log(p.pigs[id-1].Name);
+
+        if (tbody){
+            console.log( tbody.rows.length);
+
+            var row = tbody.rows[0];
+
+            row!.cells[1].textContent = p.pigs[id-1].Name;
+
+            row = tbody.rows[1];
+            row!.cells[1].textContent = p.pigs[id-1].Height.toString();
+
+            row = tbody.rows[2];
+            row!.cells[1].textContent = p.pigs[id-1].Weight.toString();
+
+            row = tbody.rows[3];
+            row!.cells[1].textContent = p.pigs[id-1].Category;
+
+            row = tbody.rows[4];
+            row!.cells[1].textContent = p.pigs[id-1].Personality.toString();
+
+
+            row = tbody.rows[5];
+            row!.cells[1].textContent = p.pigs[id-1].Breed.toString();
+
+            if (p.pigs[id-1].Category === 'Grey'){
+                row = tbody.rows[6];
+                row!.cells[0].textContent = 'Swimming'
+                row!.cells[1].textContent = (p.pigs[id-1].dynamicField as DynamicFieldMap[PigType.Grey]).Swimming.toString();
+            } else if (p.pigs[id-1].Category === 'Chestnut'){
+                row = tbody.rows[6];
+                row!.cells[0].textContent = 'Language'
+                row!.cells[1].textContent = (p.pigs[id-1].dynamicField as DynamicFieldMap[PigType.Chestnut]).Language.toString();
+            } else if (p.pigs[id-1].Category === 'White'){
+                row = tbody.rows[6];
+                row!.cells[0].textContent = 'Running'
+                row!.cells[1].textContent = (p.pigs[id-1].dynamicField as DynamicFieldMap[PigType.White]).Running.toString();
+            } else if (p.pigs[id-1].Category === 'Black'){
+                row = tbody.rows[6];
+                row!.cells[0].textContent = 'Strength'
+                row!.cells[1].textContent = (p.pigs[id-1].dynamicField as DynamicFieldMap[PigType.Black]).Strength.toString();
+            }
+
+        }
+      }
+    });
 }
 
 
@@ -379,6 +465,7 @@ function showMore(){
 
 
 
+////// to delete a pig 
 const container = document.getElementById("main-table") as HTMLTableElement;
 if (container) {
 
@@ -394,15 +481,7 @@ if (container) {
   
         console.log("Button with class 'delete' was clicked!");
 
-        deletePig(id);
+        tableUpdate(p.pigs, 'delete', id);
       }
     });
-}
-
-
-function deletePig(id: number){
-
-    p.delete(id);
-    tableUpdate(p.pigs, 'delete', id);
-    // update table
 }
