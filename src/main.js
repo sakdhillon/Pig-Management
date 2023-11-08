@@ -1,7 +1,7 @@
 /// TODO: change content - don't delete the row - for the adding pig 
 System.register(["./pig", "./pigController"], function (exports_1, context_1) {
     "use strict";
-    var Model, Pig, PigType, pigController_1, pig_1, pig_2, pig_3, pig_4, p, containerShow, container;
+    var Model, Pig, PigType, pigController_1, pig_1, pig_2, pig_3, pig_4, p, containerShow, close, container;
     var __moduleName = context_1 && context_1.id;
     //make the table
     function tableUpdate(pig, origin, id) {
@@ -334,6 +334,7 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                         const table = document.getElementById("showMore");
                         const tbody = table.querySelector("tbody");
                         table.style.visibility = 'visible';
+                        document.getElementById('close').style.visibility = 'visible';
                         console.log(p.pigs[id - 1].Name);
                         if (tbody) {
                             console.log(tbody.rows.length);
@@ -373,6 +374,11 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                     }
                 });
             }
+            close = document.getElementById("close");
+            close.addEventListener('click', function () {
+                close.style.visibility = 'hidden';
+                document.getElementById("showMore").style.visibility = 'hidden';
+            });
             ////// to delete a pig 
             container = document.getElementById("main-table");
             if (container) {

@@ -21,6 +21,11 @@ table{
     margin-top: 10px;
 }
 
+#close{
+    visibility: hidden;
+    margin-top: 10px;
+}
+
 
 #add {
     margin-top: 30px;
@@ -36,7 +41,10 @@ button{
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
+    width: 100px;
+    height: 40px; 
 }
+
 
 
 
@@ -87,10 +95,11 @@ button{
 #adding-pig td{
     margin-left: 10;
     line-height: 3;
+    padding-left: 50px;
 }
 
 #adding-pig {
-    width: 45%; 
+    width: 100%; 
     border-collapse: collapse;
     padding: 10px;
 }
@@ -99,5 +108,35 @@ button{
 
 
 #showMore{
-    visibility: none;
+    visibility: hidden;
 }
+
+
+#showMore tr{
+    text-align: left;
+    background-color: #fad9ec; 
+    
+}
+
+#showMore td{
+    margin-left: 10;
+    line-height: 3;
+    padding-left: 50px;
+}
+
+#showMore {
+    width: 94%;
+    border-collapse: collapse;
+}
+
+
+
+#wrapper {
+    display: flex; 
+}
+
+.container {
+    flex: 1;
+    margin-right: 2%; 
+}
+

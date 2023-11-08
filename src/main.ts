@@ -407,10 +407,13 @@ if (containerShow) {
         console.log("Button with class 'showwwww' was clicked!");
 
 
+
         const table = document.getElementById("showMore") as HTMLTableElement;
         const tbody = table!.querySelector("tbody");
 
         table.style.visibility = 'visible'
+
+        document.getElementById('close')!.style.visibility = 'visible';
 
         console.log(p.pigs[id-1].Name);
 
@@ -460,6 +463,13 @@ if (containerShow) {
     });
 }
 
+
+const close = document.getElementById("close") as HTMLButtonElement;
+close!.addEventListener('click', function(){
+    close.style.visibility = 'hidden';
+    document.getElementById("showMore")!.style.visibility = 'hidden';
+    
+});
 
 
 
