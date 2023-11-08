@@ -308,19 +308,31 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                 var h = document.getElementById('1');
                 var w = document.getElementById('2');
                 var select = document.getElementById('category');
-                var c = select.options[select.selectedIndex].text;
-                select.selectedIndex = 0;
+                if (select.selectedIndex !== null) {
+                    var selectB = document.getElementById('breeds');
+                    if (selectB !== null && selectB.selectedIndex !== null) {
+                        selectB.selectedIndex = 0;
+                    }
+                    select.selectedIndex = 0;
+                    const table = document.getElementById("adding-pig");
+                    const tbody = table.querySelector("tbody");
+                    var tableRows = table.rows.length;
+                    if (tbody) {
+                        tbody.deleteRow(tableRows - 1);
+                        tableRows--;
+                        tbody.deleteRow(tableRows - 1);
+                        tableRows--;
+                    }
+                }
                 var per = document.getElementById('4');
                 var dynamic = document.getElementById('5');
-                select = document.getElementById('breeds');
-                var b = select.options[select.selectedIndex].text;
-                console.log("breed", b);
-                select.selectedIndex = 0;
                 n.value = '';
                 h.value = '';
                 w.value = '';
                 per.value = '';
-                dynamic.value = '';
+                if (dynamic !== null && dynamic.value !== null) {
+                    dynamic.value = '';
+                }
             });
             containerShow = document.getElementById("main-table");
             if (containerShow) {

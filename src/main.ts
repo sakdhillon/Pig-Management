@@ -36,21 +36,34 @@ document.getElementById('cancel')!.addEventListener('click', function(){
     var w = document.getElementById('2') as HTMLInputElement;
 
     var select = document.getElementById('category') as HTMLSelectElement;
-    var c = select.options[select.selectedIndex].text;
-    select.selectedIndex = 0;
+    if (select.selectedIndex !== null){
+        var selectB = document.getElementById('breeds') as HTMLSelectElement;
+        if (selectB !== null && selectB.selectedIndex !== null){
+            selectB.selectedIndex = 0;
+        }
+        select.selectedIndex = 0;
+        const table = document.getElementById("adding-pig") as HTMLTableElement;
+        const tbody = table!.querySelector("tbody");
+        var tableRows = table!.rows.length;
+        if (tbody){
+            tbody.deleteRow(tableRows - 1);
+            tableRows--;
+            tbody.deleteRow(tableRows - 1);
+            tableRows--;
+
+        }
+    }
 
     var per = document.getElementById('4') as HTMLInputElement;
     var dynamic = document.getElementById('5') as HTMLInputElement;
  
-    select = document.getElementById('breeds') as HTMLSelectElement;
-    var b = select.options[select.selectedIndex].text;
-    console.log("breed", b);
-    select.selectedIndex = 0;
     n.value = '';
     h.value = '';
     w.value = '';
     per.value = '';
-    dynamic.value = '';
+    if (dynamic !== null && dynamic.value !== null){
+        dynamic.value = '';
+    }
 
 });
 
