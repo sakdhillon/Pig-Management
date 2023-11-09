@@ -469,11 +469,15 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                         for (var i = 0; i < p.pigs.length; i++) {
                             if (p.pigs[i].id === id) {
                                 name = p.pigs[i].Name;
-                                alert('Confirmation of Deletion: You have deleted pig: ' + name);
-                                break;
+                                var result = window.confirm("Are you sure you want to delete this pig?");
+                                if (result) {
+                                    tableUpdate(p.pigs, 'delete', id);
+                                }
+                                else {
+                                    break;
+                                }
                             }
                         }
-                        tableUpdate(p.pigs, 'delete', id);
                     }
                 });
             }
