@@ -35,6 +35,19 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
             dynamic.value = '';
         }
     }
+    function sortPigs(pigs) {
+        return pigs.sort((a, b) => {
+            if (a.Category < b.Category)
+                return -1;
+            if (a.Category > b.Category)
+                return 1;
+            if (a.Name < b.Name)
+                return -1;
+            if (a.Name > b.Name)
+                return 1;
+            return 0;
+        });
+    }
     //make the table
     function tableUpdate(pig, origin, id) {
         // reading the p.pigs array from within the controller
@@ -53,21 +66,25 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                 }
             }
             else if (origin == 'add') {
-                const row = tbody.insertRow(-1);
-                row.insertCell(0).textContent = p.pigs[p.pigs.length - 1].Name;
-                row.insertCell(1).textContent = p.pigs[p.pigs.length - 1].Category;
-                const buttonSM = document.createElement('button');
-                buttonSM.id = 'show-more' + (p.pigs.length - 1).toString();
-                buttonSM.classList.add('showMore-button');
-                buttonSM.value = (p.pigs.length).toString();
-                buttonSM.textContent = 'Show More';
-                row.insertCell(2).appendChild(buttonSM);
-                const buttonD = document.createElement('button');
-                buttonD.id = 'delete' + (p.pigs.length - 1).toString();
-                buttonD.classList.add('delete-button');
-                buttonD.textContent = 'Delete';
-                buttonD.value = (p.pigs.length).toString();
-                row.insertCell(3).appendChild(buttonD);
+                tbody.innerHTML = '';
+                const sorted = sortPigs(pig);
+                for (const pig of sorted) {
+                    const row = tbody.insertRow(-1);
+                    row.insertCell(0).textContent = pig.Name;
+                    row.insertCell(1).textContent = pig.Category;
+                    const buttonSM = document.createElement('button');
+                    buttonSM.id = 'show-more' + (pig.id).toString();
+                    buttonSM.classList.add('showMore-button');
+                    buttonSM.value = (pig.id).toString();
+                    buttonSM.textContent = 'Show More';
+                    row.insertCell(2).appendChild(buttonSM);
+                    const buttonD = document.createElement('button');
+                    buttonD.id = 'delete' + (pig.id).toString();
+                    buttonD.classList.add('delete-button');
+                    buttonD.textContent = 'Delete';
+                    buttonD.value = (pig.id).toString();
+                    row.insertCell(3).appendChild(buttonD);
+                }
             }
         }
     }
@@ -415,37 +432,42 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                         table.style.visibility = 'visible';
                         document.getElementById('close').style.visibility = 'visible';
                         if (tbody) {
-                            var row = tbody.rows[0];
-                            row.cells[1].textContent = p.pigs[id - 1].Name;
-                            row = tbody.rows[1];
-                            row.cells[1].textContent = p.pigs[id - 1].Height.toString();
-                            row = tbody.rows[2];
-                            row.cells[1].textContent = p.pigs[id - 1].Weight.toString();
-                            row = tbody.rows[3];
-                            row.cells[1].textContent = p.pigs[id - 1].Category;
-                            row = tbody.rows[4];
-                            row.cells[1].textContent = p.pigs[id - 1].Personality.toString();
-                            row = tbody.rows[5];
-                            row.cells[1].textContent = p.pigs[id - 1].Breed.toString();
-                            if (p.pigs[id - 1].Category === 'Grey') {
-                                row = tbody.rows[6];
-                                row.cells[0].textContent = 'Swimming';
-                                row.cells[1].textContent = p.pigs[id - 1].dynamicField.Swimming.toString();
-                            }
-                            else if (p.pigs[id - 1].Category === 'Chestnut') {
-                                row = tbody.rows[6];
-                                row.cells[0].textContent = 'Language';
-                                row.cells[1].textContent = p.pigs[id - 1].dynamicField.Language.toString();
-                            }
-                            else if (p.pigs[id - 1].Category === 'White') {
-                                row = tbody.rows[6];
-                                row.cells[0].textContent = 'Running';
-                                row.cells[1].textContent = p.pigs[id - 1].dynamicField.Running.toString();
-                            }
-                            else if (p.pigs[id - 1].Category === 'Black') {
-                                row = tbody.rows[6];
-                                row.cells[0].textContent = 'Strength';
-                                row.cells[1].textContent = p.pigs[id - 1].dynamicField.Strength.toString();
+                            for (var i = 0; i < p.pigs.length; i++) {
+                                if (p.pigs[i].id === id) {
+                                    var row = tbody.rows[0];
+                                    row.cells[1].textContent = p.pigs[i].Name;
+                                    row = tbody.rows[1];
+                                    row.cells[1].textContent = p.pigs[i].Height.toString();
+                                    row = tbody.rows[2];
+                                    row.cells[1].textContent = p.pigs[i].Weight.toString();
+                                    row = tbody.rows[3];
+                                    row.cells[1].textContent = p.pigs[i].Category;
+                                    row = tbody.rows[4];
+                                    row.cells[1].textContent = p.pigs[i].Personality.toString();
+                                    row = tbody.rows[5];
+                                    row.cells[1].textContent = p.pigs[i].Breed.toString();
+                                    if (p.pigs[i].Category === 'Grey') {
+                                        row = tbody.rows[6];
+                                        row.cells[0].textContent = 'Swimming';
+                                        row.cells[1].textContent = p.pigs[i].dynamicField.Swimming.toString();
+                                    }
+                                    else if (p.pigs[i].Category === 'Chestnut') {
+                                        row = tbody.rows[6];
+                                        row.cells[0].textContent = 'Language';
+                                        row.cells[1].textContent = p.pigs[i].dynamicField.Language.toString();
+                                    }
+                                    else if (p.pigs[i].Category === 'White') {
+                                        row = tbody.rows[6];
+                                        row.cells[0].textContent = 'Running';
+                                        row.cells[1].textContent = p.pigs[i].dynamicField.Running.toString();
+                                    }
+                                    else if (p.pigs[i].Category === 'Black') {
+                                        row = tbody.rows[6];
+                                        row.cells[0].textContent = 'Strength';
+                                        row.cells[1].textContent = p.pigs[i].dynamicField.Strength.toString();
+                                    }
+                                    break;
+                                }
                             }
                         }
                     }

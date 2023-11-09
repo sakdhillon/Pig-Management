@@ -12,7 +12,6 @@ System.register([], function (exports_1, context_1) {
                 add(p) {
                     this.pigs.push(p);
                     localStorage.UserArray = JSON.stringify(this.pigs); // saving in the local storage
-                    console.log("added piggggg");
                     return this.pigs.length;
                 }
                 delete(id) {

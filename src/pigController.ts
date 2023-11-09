@@ -1,5 +1,4 @@
 
-
 import * as Model from "./pig";
 import Pig = Model.Pig; 
 import DynamicFieldMap = Model.DynamicFieldMap;
@@ -23,7 +22,6 @@ export class Controller implements PigServices{
     add (p: Pig): number{
         this.pigs.push(p);
         localStorage.UserArray = JSON.stringify(this.pigs);     // saving in the local storage
-        console.log("added piggggg")
         return this.pigs.length;
     }
 
@@ -42,20 +40,4 @@ export class Controller implements PigServices{
     }
 }
 
-
-// just for testing purposes
-
-// var p = new Controller();
-
-
-// document.getElementById("add")!.addEventListener('click', function(){
-//     var pig = new Pig("piggy", 23, 23, PigType.White, "dude");
-//     (pig.dynamicField as DynamicFieldMap[PigType.Grey]).Swimming = 42;
-//     p.add(pig);
-// });
-
-
-// document.getElementById("getall")!.addEventListener('click', function(){
-//     console.log(p.showAll());
-// });
 
