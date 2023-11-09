@@ -214,12 +214,82 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
         document.getElementById('create').addEventListener('click', function () {
             console.log('addddddd');
             // TODO: add edge cases
-            document.getElementById("add").style.display = 'inline-block';
-            document.getElementById("adding-pig").style.visibility = 'hidden';
-            document.getElementById("create").style.display = 'none';
-            document.getElementById("cancel").style.display = 'none';
-            addingPig();
+            if (!edgeCases()) {
+                alert("Information Missing: Fields are either empty or are holding a value out of range. Please fill out the form properly.");
+            }
+            else {
+                document.getElementById("add").style.display = 'inline-block';
+                document.getElementById("adding-pig").style.visibility = 'hidden';
+                document.getElementById("create").style.display = 'none';
+                document.getElementById("cancel").style.display = 'none';
+                addingPig();
+            }
         });
+    }
+    //TODO: complete function 
+    function edgeCases() {
+        var x = true;
+        // needs to check that all parts of adding-pig table is filled out 
+        var n = document.getElementById('0');
+        var s = n.value;
+        var h = document.getElementById('1');
+        if (h.value === '' || h.value === null) {
+            x = false;
+        }
+        var num = parseInt(h.value);
+        if (s === '' || s === null || num < 0 || num === null) {
+            x = false;
+        }
+        var w = document.getElementById('2');
+        if (w.value === '' || w.value === null) {
+            x = false;
+        }
+        num = parseInt(w.value);
+        if (num < 0 || num === null) {
+            x = false;
+        }
+        var select = document.getElementById('category');
+        if (select.selectedIndex !== null) {
+            var selectB = document.getElementById('breeds');
+            if (selectB !== null && selectB.selectedIndex !== null) {
+                if (selectB.selectedIndex === 0) {
+                    x = false;
+                }
+            }
+            else {
+                x = false;
+            }
+            if (select.selectedIndex === 0) {
+                x = false;
+            }
+            else {
+                var dynamic = document.getElementById('5');
+                if (select.selectedIndex === 1 || select.selectedIndex === 3 || select.selectedIndex === 4) {
+                    if (dynamic.value === '' || dynamic.value === null) {
+                        x = false;
+                    }
+                    num = parseInt(dynamic.value);
+                    if (num < 0 || num === null) {
+                        x = false;
+                    }
+                }
+                else if (select.selectedIndex === 2) {
+                    s = dynamic.value;
+                    if (s === '' || s === null) {
+                        x = false;
+                    }
+                }
+            }
+        }
+        else {
+            x = false;
+        }
+        var per = document.getElementById('4');
+        s = per.value;
+        if (s === '' || s === null) {
+            x = false;
+        }
+        return x;
     }
     // when you click on the add button 
     function addingPig() {
@@ -270,11 +340,6 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
         console.log(num);
         tableUpdate(p.pigs, 'add', -1);
     }
-    // TODO: write show more function 
-    // create mini table within the table 
-    function showMore() {
-        // going to be doing by number 
-    }
     return {
         setters: [
             function (Model_1) {
@@ -292,7 +357,6 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
             Pig = Model.Pig;
             PigType = Model.PigType;
             p = new pigController_1.Controller();
-            // all event listeners 
             document.getElementById("add").addEventListener('click', function () {
                 document.getElementById("add").style.display = 'none';
                 createTable();
@@ -334,6 +398,7 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                     dynamic.value = '';
                 }
             });
+            /// SHOW MORE
             containerShow = document.getElementById("main-table");
             if (containerShow) {
                 containerShow.addEventListener("click", function (event) {
@@ -401,6 +466,14 @@ System.register(["./pig", "./pigController"], function (exports_1, context_1) {
                         const id = parseInt(clickedButton.value);
                         console.log("id: ", id);
                         console.log("Button with class 'delete' was clicked!");
+                        var name;
+                        for (var i = 0; i < p.pigs.length; i++) {
+                            if (p.pigs[i].id === id) {
+                                name = p.pigs[i].Name;
+                                alert('Confirmation of Deletion: You have deleted pig: ' + name);
+                                break;
+                            }
+                        }
                         tableUpdate(p.pigs, 'delete', id);
                     }
                 });

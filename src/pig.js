@@ -15,7 +15,6 @@ System.register([], function (exports_1, context_1) {
             exports_1("PigType", PigType);
             // PIG Class
             Pig = class Pig {
-                //ading an id???? based on the number of pigs -> private 
                 constructor(n, h, w, c, p, b, id) {
                     this.Name = n;
                     this.Height = h;
@@ -29,10 +28,10 @@ System.register([], function (exports_1, context_1) {
             };
             exports_1("Pig", Pig);
             /// BREEDSS
-            exports_1("greyBreeds", greyBreeds = ['grey']);
-            exports_1("whiteBreeds", whiteBreeds = ['white']);
-            exports_1("chestnutBreeds", chestnutBreeds = ['chestnuttt']);
-            exports_1("blackBreeds", blackBreeds = ['blackk']);
+            exports_1("greyBreeds", greyBreeds = ['British Saddleback', 'Choctaw', 'Hampshire', 'Arapawa Island']);
+            exports_1("whiteBreeds", whiteBreeds = ['Danish Landrace', 'Chester', 'Mangalica', 'Bulgarian White']);
+            exports_1("chestnutBreeds", chestnutBreeds = ['Kunekune', 'Tameworth', 'Red Wattle', 'Danish Protest']);
+            exports_1("blackBreeds", blackBreeds = ['Gascon', 'Canarian', 'Porco-monteiro', 'Guinea Hog', 'Jeju']);
         }
     };
 });

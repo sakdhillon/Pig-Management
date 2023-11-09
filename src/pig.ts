@@ -36,7 +36,6 @@ export class Pig {
 
     public dynamicField: DynamicFieldMap[keyof typeof PigType];
 
-    //ading an id???? based on the number of pigs -> private 
 
     constructor(n: string, h: number, w: number, c: keyof typeof PigType, p: string, b: string, id: number) {
         this.Name = n;
@@ -52,8 +51,7 @@ export class Pig {
 
 
 /// BREEDSS
-
-export const greyBreeds: string[] = ['grey'];
-export const whiteBreeds: string[] = ['white'];
-export const chestnutBreeds: string[] = ['chestnuttt'];
-export const blackBreeds: string[] = ['blackk'];
+export const greyBreeds: string[] = ['British Saddleback', 'Choctaw', 'Hampshire', 'Arapawa Island'];
+export const whiteBreeds: string[] = ['Danish Landrace', 'Chester', 'Mangalica', 'Bulgarian White'];
+export const chestnutBreeds: string[] = ['Kunekune', 'Tameworth', 'Red Wattle', 'Danish Protest'];
+export const blackBreeds: string[] = ['Gascon', 'Canarian', 'Porco-monteiro', 'Guinea Hog', 'Jeju'];

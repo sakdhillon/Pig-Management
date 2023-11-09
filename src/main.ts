@@ -16,7 +16,7 @@ import { blackBreeds } from "./pig";
 
 var p: Controller = new Controller();
 
-// all event listeners 
+
 document.getElementById("add")!.addEventListener('click', function(){
     document.getElementById("add")!.style.display = 'none';
     createTable();
@@ -315,16 +315,89 @@ function createTable(){
             document.getElementById('create')!.addEventListener('click', function(){
                 console.log('addddddd');
                 // TODO: add edge cases
-    
-                document.getElementById("add")!.style.display = 'inline-block';
-    
-    
-                document.getElementById("adding-pig")!.style.visibility = 'hidden';
-                document.getElementById("create")!.style.display = 'none';
-                document.getElementById("cancel")!.style.display = 'none';
+                if (!edgeCases()){
+                    alert("Information Missing: Fields are either empty or are holding a value out of range. Please fill out the form properly.")
+
+                } else {
+                    document.getElementById("add")!.style.display = 'inline-block';
+                    document.getElementById("adding-pig")!.style.visibility = 'hidden';
+                    document.getElementById("create")!.style.display = 'none';
+                    document.getElementById("cancel")!.style.display = 'none';
+                    
+                    addingPig();
+                }
                 
-                addingPig();
             });
+}
+
+
+
+//TODO: complete function 
+function edgeCases(): boolean{
+    var x: boolean = true;
+
+    // needs to check that all parts of adding-pig table is filled out 
+    var n = document.getElementById('0') as HTMLInputElement;
+    var s:string = n.value;
+    var h = document.getElementById('1') as HTMLInputElement;
+    if (h.value === '' || h.value === null){
+        x = false;
+    }
+    var num: number = parseInt(h.value);
+
+    if (s === '' || s === null || num < 0 || num === null){
+        x = false; 
+    }
+
+    var w = document.getElementById('2') as HTMLInputElement;
+    if (w.value === '' || w.value === null){
+        x = false;
+    }
+    num = parseInt(w.value);
+    if (num < 0 || num === null){
+        x = false; 
+    }
+
+    var select = document.getElementById('category') as HTMLSelectElement;
+    if (select.selectedIndex !== null){
+        var selectB = document.getElementById('breeds') as HTMLSelectElement;
+        if (selectB !== null && selectB.selectedIndex !== null){
+            if (selectB.selectedIndex === 0){
+                x = false;
+            }
+        } else {
+            x = false;
+        }
+        if (select.selectedIndex === 0){
+            x = false;
+        } else {
+            var dynamic = document.getElementById('5') as HTMLInputElement;
+            if (select.selectedIndex === 1 || select.selectedIndex === 3 || select.selectedIndex === 4){
+                if (dynamic.value === '' || dynamic.value === null){
+                    x = false;
+                }
+                num = parseInt(dynamic.value);
+                if (num < 0 || num === null){
+                    x = false; 
+                }
+            } else if (select.selectedIndex === 2){
+                s = dynamic.value
+                if (s === '' || s === null){
+                    x = false; 
+                }
+            }
+        }
+    } else {
+        x = false;
+    }
+
+    var per = document.getElementById('4') as HTMLInputElement;
+    s = per.value
+    if (s === '' || s === null){
+        x = false; 
+    }
+
+    return x;
 }
 
 
@@ -394,16 +467,7 @@ function addingPig(){
 
 
 
-
-// TODO: write show more function 
-// create mini table within the table 
-function showMore(){
-
-    // going to be doing by number 
-
-
-}
-
+/// SHOW MORE
 const containerShow = document.getElementById("main-table") as HTMLTableElement;
 if (containerShow) {
 
@@ -489,6 +553,8 @@ close!.addEventListener('click', function(){
 
 
 ////// to delete a pig 
+
+
 const container = document.getElementById("main-table") as HTMLTableElement;
 if (container) {
 
@@ -503,6 +569,16 @@ if (container) {
         console.log("id: ", id);
   
         console.log("Button with class 'delete' was clicked!");
+
+        var name: string;
+
+        for (var i: number = 0; i < p.pigs.length; i ++){
+            if (p.pigs[i].id === id){
+                name = p.pigs[i].Name;
+                alert('Confirmation of Deletion: You have deleted pig: ' + name); 
+                break;
+            }
+        }
 
         tableUpdate(p.pigs, 'delete', id);
       }
